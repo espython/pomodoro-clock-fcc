@@ -1,0 +1,20 @@
+body {
+    background-color: #F3E5F5;
+}
+
+.alert-style {
+    margin-top: 20px;
+}
+
+#drawing {}
+
+
+/* Buttons area styles */
+
+.buttons {
+    margin-bottom: 70px;
+}
+
+.btnawesome {
+    margin: 8px;
+}
