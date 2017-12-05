@@ -1,7 +1,7 @@
 <template class='top'>
 <div>
-  <b-navbar  type="light" variant="primary">
-    <b-navbar-brand class="mx-auto ">pomodoro-clock</b-navbar-brand>
+  <b-navbar  type="dark"  variant="primary">
+    <b-navbar-brand class="mx-auto">pomodoro-clock</b-navbar-brand>
 
   </b-navbar>
 </div>

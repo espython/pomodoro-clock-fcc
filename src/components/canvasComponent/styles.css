@@ -1,20 +1,18 @@
-body {
-    background-color: #F3E5F5;
-}
-
 .alert-style {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
-#drawing {}
+#drawing {
+    margin-top: 50px;
+}
 
 
 /* Buttons area styles */
 
 .buttons {
-    margin-bottom: 70px;
+    margin-top: 20px;
 }
 
 .btnawesome {
-    margin: 8px;
+    margin-right: 8px;
 }

@@ -1,59 +1,59 @@
 // render the hello component :-
 export default {
     name: "canvascomp",
+    props: ['time'],
     data: function() {
         return {
-            msg: "Welcome to Your Vue.js App",
-            x: 0,
-            y: 0
+            msg: "Welcome to the Pomodoro clock",
+            timestamp: this.time,
+            interval: null
 
         };
     },
+    computed: {
+
+        angle() {
+            return 360 - ((360 / (this.time)) * this.timestamp);
+        },
+        minutes() {
+            return Math.floor(this.timestamp / 60);
+        },
+        seconds() {
+            return this.timestamp % 60;
+        },
+        text() {
+            return `${this.minutes}:${this.seconds}`;
+        }
+    },
     methods: {
         sectorMove: function() {
-            this.interval = setInterval(function() {
-                myTimer();
-
-            }, 1000);
-            var t = 0;
-
-            function myTimer() {
-                if (t < 360) {
-                    t = t + 1;
-                } else {
-                    console.log('timeOut');
-                }
-
-                let canvas = document.getElementById("drawing");
-                let context = canvas.getContext("2d");
-                context.beginPath();
-                //context.lineWidth = "1";
-                var deg = Math.PI / 180;
-                let centerX = canvas.width / 2;
-                let centerY = canvas.height / 2;
-                context.arc(centerX, centerY, 135, 0 * deg, (t * deg));
-                context.lineTo(centerX, centerY);
+            let canvas = document.getElementById("drawing");
+            let context = canvas.getContext("2d");
+            context.beginPath();
+            //context.lineWidth = "1";
+            var radAngle = this.angle;
+            var deg = Math.PI / 180;
+            var centerX = canvas.width / 2;
+            var centerY = canvas.height / 2;
 
 
-                // line color
-                context.strokeStyle = "#0277BD";
-                context.stroke();
-                context.fillStyle = "#0277BD";
-                context.closePath();
-                context.fill();
-                context.stroke();
-
-                context.fill();
-                //console.log(t);
+            context.arc(centerX, centerY, 135, 0 * deg, (radAngle * deg));
+            context.lineTo(centerX, centerY);
 
 
-            }
+            // line color
+            context.strokeStyle = "#0277BD";
+            context.stroke();
+            context.fillStyle = "#0277BD";
+            context.closePath();
+            context.fill();
+            context.stroke();
 
-        },
-        mousePosition: function(event) {
-            // console.log(event);
-            this.x = event.offsetX;
-            this.y = event.offsetY;
+            context.fill();
+
+            //console.log(t);
+
+
         },
         draw: function() {
             let canvas = document.getElementById("drawing");
@@ -84,19 +84,30 @@ export default {
 
         },
         startTimer: function() {
-            this.sectorMove();
+            this.interval = setInterval(() => {
+                this.timestamp--;
+                if (this.timestamp === 0) {
+                    this.timestamp = this.time;
+
+                }
+                this.sectorMove();
+
+            }, 1000);
+
+
         },
         stopTimer: function() {
-
+            clearInterval(this.interval);
+            this.timestamp = this.time;
+            this.draw();
         },
         pauseTimer: function() {
             clearInterval(this.interval);
 
         }
-
     },
     mounted: function() {
         this.draw();
-        // this.sectorMove();
+        //this.sectorMove();
     }
 };
