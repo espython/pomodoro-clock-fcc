@@ -1,10 +1,10 @@
 <template>
 <div>
-  <div class="canvascomp row justify-content-center">
-    <b-alert variant="primary" v-bind:time="time" show class="alert-style"><h4> {{ text }} </h4></b-alert>
+  <div class="row justify-content-center">
+    <b-alert variant="success" v-bind:time="time" show class="alert-style"><h4> {{ text }} </h4></b-alert>
   </div>
-    <div class="row justify-content-center" >
-    <canvas :angle="angle" id="drawing"  width="315" height="315"></canvas>
+    <div class="row justify-content-center align-middle" >
+    <canvas :angle="angle" id="drawing"  width="325" height="325"></canvas>
     </div>
 
     <!-- Starting playing buttons area -->

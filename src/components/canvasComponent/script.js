@@ -1,4 +1,12 @@
 // render the hello component :-
+
+// add 0 to the seconds and minutes
+function leftPad(value) {
+    if (('' + value).length > 1) {
+        return value;
+    }
+    return '0' + value;
+}
 export default {
     name: "canvascomp",
     props: ['time'],
@@ -22,7 +30,7 @@ export default {
             return this.timestamp % 60;
         },
         text() {
-            return `${this.minutes}:${this.seconds}`;
+            return `${leftPad(this.minutes)}:${leftPad(this.seconds)}`;
         }
     },
     methods: {
@@ -42,9 +50,9 @@ export default {
 
 
             // line color
-            context.strokeStyle = "#0277BD";
+            context.strokeStyle = "#0d47a1";
             context.stroke();
-            context.fillStyle = "#0277BD";
+            context.fillStyle = "#0d47a1";
             context.closePath();
             context.fill();
             context.stroke();
@@ -60,13 +68,13 @@ export default {
             let ctx = canvas.getContext("2d");
             var centerX = canvas.width / 2;
             var centerY = canvas.height / 2;
-            var radius = 156;
+            var radius = 160;
             // Draw the outer circle :-
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-            ctx.strokeStyle = '#0277BD';
+            ctx.strokeStyle = '#0D47A1';
             //ctx.lineWidth = 1;
-            ctx.fillStyle = '#0277BD';
+            ctx.fillStyle = '#0D47A1';
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
@@ -74,9 +82,9 @@ export default {
             //Draw the inner circuit :-
             ctx.beginPath();
             ctx.arc(centerX, centerY, 135, 0, 2 * Math.PI, false);
-            ctx.strokeStyle = '#00B8D4';
+            ctx.strokeStyle = '#4FC3F7';
             //ctx.lineWidth = 1;
-            ctx.fillStyle = '#00B8D4';
+            ctx.fillStyle = '#4FC3F7';
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
