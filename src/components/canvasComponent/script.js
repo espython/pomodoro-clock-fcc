@@ -14,7 +14,10 @@ export default {
         return {
             msg: "Welcome to the Pomodoro clock",
             timestamp: this.time,
-            interval: null
+            interval: null,
+            isStarted: false,
+            isPaused: false,
+            isStopped: true,
 
         };
     },
@@ -45,7 +48,7 @@ export default {
             var centerY = canvas.height / 2;
 
 
-            context.arc(centerX, centerY, 135, 0 * deg, (radAngle * deg));
+            context.arc(centerX, centerY, 135, (0 - 90) * deg, ((radAngle - 90) * deg));
             context.lineTo(centerX, centerY);
 
 
@@ -91,27 +94,38 @@ export default {
 
 
         },
-        startTimer: function() {
+        startTimer: function(event) {
+            if (this.isStarted === false) {
+                this.timestamp = this.time;
+            }
+            this.isStarted = true;
+            this.isStopped = false;
+            this.isPaused = false;
+            // if (this.interval) {
+            //     clearInterval(this.interval);
+            // }
+            // this.sectorMove();
             this.interval = setInterval(() => {
                 this.timestamp--;
-                if (this.timestamp === 0) {
-                    this.timestamp = this.time;
-
-                }
                 this.sectorMove();
+                if (this.timestamp === 0) {
+                    clearInterval(this.interval);
+                }
 
-            }, 1000);
-
+            }, 1000)
 
         },
         stopTimer: function() {
             clearInterval(this.interval);
             this.timestamp = this.time;
+            this.isStopped = true;
+            this.isStarted = false;
+            this.isPaused = false;
             this.draw();
         },
         pauseTimer: function() {
             clearInterval(this.interval);
-
+            this.isPaused = true;
         }
     },
     mounted: function() {

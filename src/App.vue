@@ -14,7 +14,7 @@ export default {
   name: "app",
   computed: {
       time() {
-            return 25 * 60;
+            return  20;
         },
   },
   components: {

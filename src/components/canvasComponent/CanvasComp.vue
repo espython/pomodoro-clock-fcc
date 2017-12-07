@@ -10,13 +10,13 @@
     <!-- Starting playing buttons area -->
     <div class="buttons row justify-content-center">
 
-        <b-button v-on:click ="startTimer" variant="outline-primary"  class="btnawesome"><icon name="play" Label="play" scale="2"></icon></b-button>
+        <b-button v-on:click="startTimer" v-bind:class="{disabled: isStarted && !isPaused}" variant="outline-primary"  class="btnawesome"><icon name="play" Label="play" scale="2"></icon></b-button>
 
 
-        <b-button v-on:click="pauseTimer" variant="outline-primary" class="btnawesome"><icon name="pause-circle" scale="2"></icon></b-button>
+        <b-button v-on:click="pauseTimer" :class="{disabled: !isStarted || isPaused}"  variant="outline-primary" class="btnawesome"><icon name="pause-circle" scale="2"></icon></b-button>
 
 
-        <b-button v-on:click="stopTimer" variant="outline-primary"  class="btnawesome"><icon name="stop-circle" scale="2"></icon></b-button>
+        <b-button v-on:click="stopTimer" :class="{disabled: !isStarted || isStopped}" variant="outline-primary"  class="btnawesome"><icon name="stop-circle" scale="2"></icon></b-button>
 
 
 
