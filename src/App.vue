@@ -16,6 +16,9 @@ export default {
       time() {
             return  20;
         },
+        angle(){
+
+        }
   },
   components: {
     CanvasComp,

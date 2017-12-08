@@ -1,4 +1,9 @@
 // render the hello component :-
+var $ = require('jquery');
+
+if (this.seconds === 0) {
+    $('.toggle').toggle();
+}
 
 // add 0 to the seconds and minutes
 function leftPad(value) {
@@ -48,7 +53,7 @@ export default {
             var centerY = canvas.height / 2;
 
 
-            context.arc(centerX, centerY, 135, (0 - 90) * deg, ((radAngle - 90) * deg));
+            context.arc(centerX, centerY, 138, (0 - 90) * deg, ((radAngle - 90) * deg));
             context.lineTo(centerX, centerY);
 
 
@@ -84,7 +89,7 @@ export default {
 
             //Draw the inner circuit :-
             ctx.beginPath();
-            ctx.arc(centerX, centerY, 135, 0, 2 * Math.PI, false);
+            ctx.arc(centerX, centerY, 145, 0, 2 * Math.PI, false);
             ctx.strokeStyle = '#4FC3F7';
             //ctx.lineWidth = 1;
             ctx.fillStyle = '#4FC3F7';
@@ -96,23 +101,34 @@ export default {
         },
         startTimer: function(event) {
             if (this.isStarted === false) {
-                this.timestamp = this.time;
+                //this.timestamp = this.time;
             }
             this.isStarted = true;
             this.isStopped = false;
             this.isPaused = false;
-            // if (this.interval) {
-            //     clearInterval(this.interval);
-            // }
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
             // this.sectorMove();
-            this.interval = setInterval(() => {
-                this.timestamp--;
-                this.sectorMove();
-                if (this.timestamp === 0) {
-                    clearInterval(this.interval);
-                }
+            if (this.timestamp > 0) {
+                this.interval = setInterval(() => {
+                    $('#start').hide();
+                    this.timestamp--;
+                    this.sectorMove();
+                    if (this.timestamp === 0) {
+                        $('#digitalClock').addClass('alert-danger');
+                        clearInterval(this.interval);
+                        $('#start').show();
+                    }
 
-            }, 1000)
+
+
+                }, 1000);
+
+
+
+            }
+
 
         },
         stopTimer: function() {
@@ -122,10 +138,18 @@ export default {
             this.isStarted = false;
             this.isPaused = false;
             this.draw();
+            $('#digitalClock').removeClass("alert-danger");
+            $('#start').show();
         },
         pauseTimer: function() {
             clearInterval(this.interval);
             this.isPaused = true;
+            $('#start').show();
+
+        },
+        breakeTimer: function() {
+            this.timestamp = 5;
+
         }
     },
     mounted: function() {
