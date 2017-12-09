@@ -1,6 +1,8 @@
 .alert-style {
     margin-top: 10px;
     margin-bottom: 10px;
+    user-select: none;
+    -moz-user-select: none;
 }
 
 #drawing {
@@ -12,6 +14,16 @@
 
 .buttons {
     margin-top: 30px;
+    padding-bottom: 20px;
+}
+
+.row {
+    margin-top: 10px;
+}
+
+.options {
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .btnawesome {

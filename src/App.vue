@@ -14,11 +14,18 @@ export default {
   name: "app",
   computed: {
       time() {
-            return  20;
+
+          return  25*60;
+
         },
         angle(){
 
         }
+  },
+  data(){
+    return{
+      isworking:true
+    }
   },
   components: {
     CanvasComp,
@@ -30,7 +37,6 @@ export default {
 <style>
 #app {
   height: 100%;
-  width: 100%;
   background-color: #E0F7FA ;
 }
 </style>

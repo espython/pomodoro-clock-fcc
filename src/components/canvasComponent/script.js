@@ -23,13 +23,19 @@ export default {
             isStarted: false,
             isPaused: false,
             isStopped: true,
+            isworking: true
 
         };
     },
     computed: {
 
         angle() {
-            return 360 - ((360 / (this.time)) * this.timestamp);
+            if (this.isworking) {
+                return 360 - ((360 / (this.time)) * this.timestamp);
+            } else {
+                return 360 - ((360 / (5 * 60)) * this.timestamp);
+            }
+
         },
         minutes() {
             return Math.floor(this.timestamp / 60);
@@ -39,7 +45,7 @@ export default {
         },
         text() {
             return `${leftPad(this.minutes)}:${leftPad(this.seconds)}`;
-        }
+        },
     },
     methods: {
         sectorMove: function() {
@@ -119,6 +125,8 @@ export default {
                         $('#digitalClock').addClass('alert-danger');
                         clearInterval(this.interval);
                         $('#start').show();
+                        this.notify();
+
                     }
 
 
@@ -140,6 +148,8 @@ export default {
             this.draw();
             $('#digitalClock').removeClass("alert-danger");
             $('#start').show();
+            $('.coffee').show();
+            $('.laptop').show();
         },
         pauseTimer: function() {
             clearInterval(this.interval);
@@ -147,9 +157,53 @@ export default {
             $('#start').show();
 
         },
+        workeTimer: function() {
+            this.timestamp = 25 * 60;
+            this.stopTimer();
+            $('.coffee').hide();
+            $('.laptop').prop('disabled', true);
+        },
         breakeTimer: function() {
-            this.timestamp = 5;
+            this.timestamp = 5 * 60;
+            this.isworking = false;
+            $('.laptop').hide();
+            $('.coffee').prop('disabled', true);
+        },
+        notify: function() {
+            // Let's check if the browser supports notifications
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notification");
+            }
 
+            // Let's check whether notification permissions have already been granted
+            else if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                var notification = new Notification("Time Up Dude!");
+                var audio = new Audio('http://soundbible.com/grab.php?id=2197&type=mp3').play();
+                if (audio !== undefined) {
+                    audio.then(function() {
+                        // Automatic playback started!
+                    }).catch(function(error) {
+                        // Automatic playback failed.
+                        // Show a UI element to let the user manually start playback.
+                    });
+                }
+
+
+            }
+
+            // Otherwise, we need to ask the user for permission
+            else if (Notification.permission !== "denied") {
+                Notification.requestPermission(function(permission) {
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                        var notification = new Notification("Hi there!");
+                    }
+                });
+            }
+
+            // At last, if the user has denied notifications, and you
+            // want to be respectful there is no need to bother them any more.
         }
     },
     mounted: function() {
